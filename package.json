@@ -1,8 +1,11 @@
 {
-  "name": "@hyc/env-scripts",
+  "name": "@mini-code/env-scripts",
   "version": "0.0.2",
-  "description": "自定义工具的配置端工程化构建环境",
+  "description": "React 工程化构建环境",
   "main": "index.js",
+  "scripts": {
+    "release": "npm publish --access=public"
+  },
   "bin": {
     "mini-scripts": "./bin/scripts.js",
     "minictl": "./bin/scripts.js"
