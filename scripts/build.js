@@ -25,7 +25,7 @@ const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
 
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-const { webpackConfig, preRun } = require('../config/customer-script-config');
+const { webpackConfig, webpackConfigRaw, preRun } = require('../config/customer-script-config');
 
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
@@ -52,7 +52,7 @@ if (!checkRequiredFiles([paths.deployHtml, paths.appIndexJs])) {
 
 // Generate configuration
 const srcConfig = configFactory('production');
-const config = merge(srcConfig, webpackConfig);
+const config = webpackConfigRaw || merge(srcConfig, webpackConfig);
 
 if(preRun) preRun();
 

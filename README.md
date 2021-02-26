@@ -34,10 +34,6 @@ module.exports = {
   // 给 devServer 的 options
   devServerOptions: {},
   // webpack 的 options
-  compilerOptions: {
-    // 是否使用 ts checker
-    useTSChecker: true
-  },
   // 覆盖默认提供的 webpack config
   webpackConfig: {
     output: {
@@ -47,6 +43,8 @@ module.exports = {
       react: 'React'
     }
   },
+  // 完全替代默认的 webpack 配置
+  webpackConfigRaw: {},
   preRun: () => {
     // 启动前生命周期函数
   }

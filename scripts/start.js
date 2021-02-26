@@ -35,7 +35,7 @@ const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 const getClientEnvironment = require('../config/env');
-const { webpackConfig, preRun, compilerOptions, devServerOptions } = require('../config/customer-script-config');
+const { webpackConfig, webpackConfigRaw, preRun, devServerOptions } = require('../config/customer-script-config');
 
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
@@ -92,8 +92,8 @@ const buildApp = () => {
         // We have not found a port.
         return;
       }
-      const srcConfig = configFactory('development', compilerOptions);
-      const config = merge(srcConfig, webpackConfig);
+      const srcConfig = configFactory('development');
+      const config = webpackConfigRaw || merge(srcConfig, webpackConfig);
       const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
       const appName = require(paths.appPackageJson).name;
       const useTypeScript = fs.existsSync(paths.appTsConfig);
