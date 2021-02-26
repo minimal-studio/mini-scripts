@@ -18,6 +18,11 @@ const customerConfigSchema = yup.object().shape({
   paths: yup.object().shape(overridablePaths).required('缺少 paths'),
   // 用于覆盖原有 webpack 配置的配置
   webpackConfig: yup.object().shape({}),
+  devServerOptions: yup.object().shape({}),
+  compilerOptions: yup.object().shape({
+    /** 是否使用 ts checker */
+    useTSChecker: yup.boolean()
+  }),
 });
 
 const customerScriptConfig = (() => {
@@ -41,6 +46,8 @@ const customerScriptConfig = (() => {
 module.exports = {
   paths: customerScriptConfig.paths || {},
   webpackConfig: customerScriptConfig.webpackConfig || {},
-  preRun: customerScriptConfig.preRun || {},
+  compilerOptions: customerScriptConfig.compilerOptions || {},
+  devServerOptions: customerScriptConfig.devServerOptions || {},
   buildExternalsPipeline: customerScriptConfig.buildExternalsPipeline || [],
+  preRun: customerScriptConfig.preRun || {},
 };

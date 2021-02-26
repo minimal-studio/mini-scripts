@@ -78,7 +78,9 @@ const hasJsxRuntime = (() => {
 
 // This is the production and development configuration.
 // It is focused on developer experience, fast rebuilds, and a minimal bundle.
-module.exports = function (webpackEnv) {
+module.exports = function (webpackEnv, {
+  useTSChecker = true
+}) {
   const isEnvDevelopment = webpackEnv === 'development';
   const isEnvProduction = webpackEnv === 'production';
 
@@ -675,7 +677,7 @@ module.exports = function (webpackEnv) {
           maximumFileSizeToCacheInBytes: 5 * 1024 * 1024,
         }),
       // TypeScript type checking
-      useTypeScript &&
+      useTSChecker && useTypeScript &&
         new ForkTsCheckerWebpackPlugin({
           typescript: resolve.sync('typescript', {
             basedir: paths.appNodeModules,

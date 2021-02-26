@@ -35,7 +35,7 @@ const paths = require('../config/paths');
 const configFactory = require('../config/webpack.config');
 const createDevServerConfig = require('../config/webpackDevServer.config');
 const getClientEnvironment = require('../config/env');
-const { webpackConfig, preRun } = require('../config/customer-script-config');
+const { webpackConfig, preRun, compilerOptions, devServerOptions } = require('../config/customer-script-config');
 
 const react = require(require.resolve('react', { paths: [paths.appPath] }));
 
@@ -71,32 +71,6 @@ if (process.env.HOST) {
 
 // const devServerPublicDir = path.join(paths.appPath, '.app/public');
 
-// const copyPublic = () => {
-//   mkdirp(devServerPublicDir);
-//   copySync(paths.appPublic, devServerPublicDir, {
-//     recursive: true,
-//     overwrite: true
-//   }, (err) => {
-//     if(err) {
-//       console.log(`copy public file error:`, err);
-//     } else {
-//       console.log(`copy file success`);
-//     }
-//   });
-// };
-
-// /**
-//  * 将 public 文件夹复制到
-//  */
-// copyPublic();
-
-/**
- * 构建核心模块
- */
-// CoreModulePipelineCompiler({
-//   outputDir: paths.appPublic
-// });
-
 // We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
@@ -118,7 +92,7 @@ const buildApp = () => {
         // We have not found a port.
         return;
       }
-      const srcConfig = configFactory('development');
+      const srcConfig = configFactory('development', compilerOptions);
       const config = merge(srcConfig, webpackConfig);
       const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
       const appName = require(paths.appPackageJson).name;
@@ -158,11 +132,8 @@ const buildApp = () => {
         urls.lanUrlForConfig,
       );
 
-      const devServer = new WebpackDevServer(compiler, serverConfig);
-      // const devServer = new WebpackDevServer(compiler, merge(serverConfig, 
-      // {
-      //   contentBase: devServerPublicDir
-      // }));
+      // const devServer = new WebpackDevServer(compiler, serverConfig);
+      const devServer = new WebpackDevServer(compiler, merge(serverConfig, devServerOptions));
   
       // Launch WebpackDevServer.
       devServer.listen(port, HOST, (err) => {
